@@ -4,12 +4,34 @@
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Script-Type" content="text/javascript">
 	<title>Tetris Game</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./style/main.css" >
 </head>
 <body>
-	<div id="game_container">
-		<canvas id="canvas" width="240px" height="400px"></canvas>
-	</div>
-	<script src="Simple.js"></script>
+	<header>
+		<canvas id="header_canvas" width="100%" height="500px">
+		<script type="text/javascript" src="./AnimateHeader.js">
+		</script>
+		<nav>
+			<div id="logo">
+				<h1>TetrisArcade</h1>
+			</div>
+			<ul>
+				<li><a href="#" target="_self">Global Ranking</a></li>
+				<li><a href="#" target="_self">Log In</a></li>
+			</ul>
+		</nav>
+		<div class="clear"></div>
+	</header>
+	<section id="login_section" class="hidden">
+		<form action="#" method="POST">
+			<input type="text" name="username" placeholder="Username">
+			<input type="password" name="password" placeholder="Password">
+			<input type="submit">
+		</form>
+	</section>
+	<section id="game_section" class="hidden">
+		<canvas id="game_canvas" width="240px" height="400px">
+	</section>
 </body>
 </html>
