@@ -131,6 +131,10 @@ function disegnaScena() {
 	// Primo passo resetto lo sfondo a nero con un rettangolo che copre l'intero canvas
 	cntx.fillStyle = "#000";
 	cntx.fillRect(0,0, canvas.width, canvas.height);
+
+	// Disegno tutti i pezzi del contenitore
+	disegnaContenitore();
+
 	// Secondo passo disegno il pezzo del giocatore ovunque si trovi in questo istante
 	disegnaPezzo(player.pezzo);
 }
@@ -203,6 +207,21 @@ function fissaPezzoGiocatore() {
 				contenitore[r+player.pos.y/grandezza_di_un_quadratino_elementare][c+player.pos.x/grandezza_di_un_quadratino_elementare] = player.pezzo[r][c];
 			}
 
+		}
+	}
+}
+
+// Disegna tutti i pezzi nel contenitore
+function disegnaContenitore() {
+	for(var r=0; r<contenitore.length; ++r) {
+		for(var c=0; c<contenitore[0].length; ++c) {
+			if (contenitore[r][c]!=0) {
+				cntx.fillStyle = colori[contenitore[r][c]-1];// Imposto il colore del quadratino
+				cntx.fillRect(c*grandezza_di_un_quadratino_elementare,
+							  r*grandezza_di_un_quadratino_elementare,
+							  grandezza_di_un_quadratino_elementare,
+							  grandezza_di_un_quadratino_elementare);// e lo disegno
+			}
 		}
 	}
 }
