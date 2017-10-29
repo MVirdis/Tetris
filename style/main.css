@@ -1,0 +1,27 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+canvas {
+	position: relative;
+	margin: 0 auto;
+	display: block;
+	float: none;
+}
+
+.debug {
+	border: 1px dashed black;
+}
+
+#game_container {
+	position: static;
+	display: block;
+	width: 100%;
+	min-height: 500px;
+}
