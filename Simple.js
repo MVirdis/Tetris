@@ -15,18 +15,57 @@ var player = {
 
 function assegnaPezzo() {
 	var pezzo_a_caso = pezzi[Math.floor(Math.random()*pezzi.length)];
-	player.pezzo = creaPezzo(pezzo_a_caso);
+	player.pezzo = creaPezzo('T');
 }
 
 function creaPezzo(pezzo) {
 	//Per ora non sono implementati altri pezzi oltre alla T
 	switch(pezzo) {
-		default:
+		case 'T':
 		var matrice_nuova =  [[0,0,0],
 							  [1,1,1],
 							  [0,1,0]];
 		return matrice_nuova;
 		break;
+		case 'z':
+		var matrice_nuova =  [[0,0,0],
+							  [2,2,0],
+							  [0,2,2]];
+		return matrice_nuova;
+		break;
+		case 's':
+		var matrice_nuova =  [[0,0,0],
+							  [0,3,3],
+							  [3,3,0]];
+		return matrice_nuova;
+		break;
+		case 'O':
+		var matrice_nuova =  [[4,4],
+							  [4,4]];
+		return matrice_nuova;
+		break;
+		case 'l':
+		var matrice_nuova =  [[0,5,0,0],
+							  [0,5,0,0],
+							  [0,5,0,0],
+							  [0,5,0,0]];
+		return matrice_nuova;
+		break;
+		case 'L':
+		var matrice_nuova =  [[6,0,0],
+							  [6,0,0],
+							  [6,6,0]];
+		return matrice_nuova;
+		break;
+		case 'J':
+		var matrice_nuova =  [[0,0,7],
+							  [0,0,7],
+							  [0,7,7]];
+		return matrice_nuova;
+		break;
+		default:
+			console.log("Errore! Il pezzo specificato non esiste.");
+			return null;
 	}
 }
 
@@ -38,7 +77,9 @@ function disegnaPezzo(matricePezzo) {
 			// Se nella matrice del pezzo incontro un numero diverso da 0
 			// disegno un quadratino in quella posizione
 			if (matricePezzo[r][c]!==0) {
-				cntx.fillStyle = "#ff0000";// colore rosso
+				// Ogni pezzo ha un numero che identifica il suo colore
+				// i numeri dei pezzi va da 1 a 7 mentre quello dei colori va da 0 a 6
+				cntx.fillStyle = colori[matricePezzo[r][c]-1];
 				cntx.fillRect(c*grandezza_di_un_quadratino_elementare+player.pos.x,
 							  r*grandezza_di_un_quadratino_elementare+player.pos.y,
 							  grandezza_di_un_quadratino_elementare,
