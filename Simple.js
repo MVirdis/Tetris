@@ -171,6 +171,18 @@ function gestisciTasti(evento) {
 				disegnaScena();
 			}
 		break;
+		case 82:// Tasto 'r'
+			// Ruoto il pezzo attuale se preme r
+			var backup = player.pezzo;
+			player.pezzo = ruotaPezzo(player.pezzo);
+			
+			// Controllo che la rotazione non abbia causato una collisione
+			if (collide()) {
+				player.pezzo = backup;
+			} else {
+				disegnaScena();
+			}
+		break;
 		default:// Lo uso per vedere quale keyCode corrisponde ai vari tasti
 			// Per aprire la console da Google Chrome premere Ctrl+Maiusc+I
 			console.log(evento.keyCode);
@@ -226,6 +238,25 @@ function disegnaContenitore() {
 			}
 		}
 	}
+}
+
+// Per ruotare un pezzo dalla matrice bisogna fare la trasposta
+// Ma riflessa specularmente rispetto all'asse verticale
+function ruotaPezzo(matricePezzo) {
+	var nuovaMatricePezzo = [];
+	// Inizializzo una matrice nulla con le stesse dimensioni di matricePezzo
+	for(var r=0; r<matricePezzo.length; ++r) {
+		nuovaMatricePezzo.push([]);
+		for(var c=0; c<matricePezzo[0].length; ++c) {
+			nuovaMatricePezzo[r][c] = 0;
+		}
+	}
+	for(var r=matricePezzo.length-1; r>=0; --r) {
+		for(var c=0; c<matricePezzo[0].length; ++c) {
+			nuovaMatricePezzo[r][c] = matricePezzo[c][matricePezzo.length-(r+1)];
+		}
+	}
+	return nuovaMatricePezzo;
 }
 
 // Logica delle Collisioni
