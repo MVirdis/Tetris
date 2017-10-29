@@ -151,6 +151,43 @@ function gestisciTasti(evento) {
 	}
 }
 
+// Logica delle dinamiche dei pezzi
+// Devo creare il contenitore che conterrà i pezzi una volta che sono arrivati in fondo
+// Ogni pezzo occupa una dimensione elementare dato che il canvas è largo  canvas.width
+// e lungo canvas.width posso calcolare facilmente il numero di caselle che deve avere il contenitore
+var contenitore = [];//Array vuoto, sarà poi una matrice
+
+function creaContenitore() {
+	var larghezza_contenitore = canvas.width/grandezza_di_un_quadratino_elementare;
+	var altezzza_contenitore = canvas.height/grandezza_di_un_quadratino_elementare;
+
+	var contenitore_temporaneo = [];
+
+	for(var r=0; r<altezzza_contenitore; ++r) {
+		contenitore_temporaneo[r] = [];
+		for(var c=0; c<larghezza_contenitore; ++c) {
+			contenitore_temporaneo[r][c] = 0;// Inizializzo un contenitore senza pezzi
+		}
+	}
+
+	return contenitore_temporaneo;
+}
+
+// Serve per inserire nel contenitore un pezzo nel punto esatto
+// in cui si trova quando viene chiamata questa funzione
+function fissaPezzoGiocatore() {
+	for(var r=0; r<player.pezzo.length; ++r) {
+		for(var c=0; c<player.pezzo[0].length; ++c) {
+
+			if(player.pezzo[r][c]!=0) {
+				contenitore[r+player.pos.y/grandezza_di_un_quadratino_elementare][c+player.pos.x/grandezza_di_un_quadratino_elementare] = player.pezzo[r][c];
+			}
+
+		}
+	}
+}
+
 // Qui faccio partire il gioco
+contenitore = creaContenitore();
 assegnaPezzo();
 update();
