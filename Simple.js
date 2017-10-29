@@ -115,6 +115,16 @@ function cadutaGiocatore() {
 	contatore_tempo = 0;
 	// Abbasso il giocatore di una quota elementare
 	player.pos.y += grandezza_di_un_quadratino_elementare;
+	// Se collido con il pavimento
+	if(collide()) {
+		// Riporto il pezzo dov'era appena prima di collidere
+		player.pos.y -= grandezza_di_un_quadratino_elementare;
+		// Fisso il pezzo nel contenitore
+		fissaPezzoGiocatore();
+		//Riporto il giocatore in alto e riassegno un pezzo a caso
+		player.pos.y = 0;
+		assegnaPezzo();
+	}
 }
 
 function disegnaScena() {
@@ -131,19 +141,29 @@ document.addEventListener("keydown", gestisciTasti);
 function gestisciTasti(evento) {
 	switch(evento.keyCode) {
 		case 40://Freccia giù
-			cadutaGiocatore();
+			cadutaGiocatore();//Fa già il controllo della collisione
 			// Forza a disegnare la scena prima che sia passato un secondo
 			disegnaScena();
 		break;
 		case 39:// Freccia dx
 			player.pos.x += grandezza_di_un_quadratino_elementare;
 
-			disegnaScena();
+			// Se collido lo riporto dove stava e mi risparmio di ridisegnare la scena
+			if(collide()) {
+				player.pos.x -= grandezza_di_un_quadratino_elementare;
+			} else {
+				disegnaScena();
+			}
 		break;
 		case 37://Freccia sx
 			player.pos.x -= grandezza_di_un_quadratino_elementare;
 
-			disegnaScena();
+			// Se collido lo riporto dove stava e mi risparmio di ridisegnare la scena
+			if(collide()) {
+				player.pos.x += grandezza_di_un_quadratino_elementare;
+			} else {
+				disegnaScena();
+			}
 		break;
 		default:// Lo uso per vedere quale keyCode corrisponde ai vari tasti
 			// Per aprire la console da Google Chrome premere Ctrl+Maiusc+I
@@ -154,7 +174,7 @@ function gestisciTasti(evento) {
 // Logica delle dinamiche dei pezzi
 // Devo creare il contenitore che conterrà i pezzi una volta che sono arrivati in fondo
 // Ogni pezzo occupa una dimensione elementare dato che il canvas è largo  canvas.width
-// e lungo canvas.width posso calcolare facilmente il numero di caselle che deve avere il contenitore
+// e lungo canvas.height posso calcolare facilmente il numero di caselle che deve avere il contenitore
 var contenitore = [];//Array vuoto, sarà poi una matrice
 
 function creaContenitore() {
@@ -185,6 +205,27 @@ function fissaPezzoGiocatore() {
 
 		}
 	}
+}
+
+// Logica delle Collisioni
+// Bisogna controllare in ogni momento se il giocatore è in collisione o con una parete
+// o con un pezzo del contenitore
+function collide() {
+	for(var r=0; r<player.pezzo.length;++r) {
+		for(var c=0; c<player.pezzo[0].length;++c) {
+			var player_x = player.pos.x/grandezza_di_un_quadratino_elementare;
+			var player_y = player.pos.y/grandezza_di_un_quadratino_elementare;
+			if (player.pezzo[r][c]!=0) {
+				if (r+player_y>=contenitore.length ||
+					c+player_x<0 ||
+					c+player_x>=contenitore[0].length ||
+					contenitore[r+player_y][c+player_x]!=0) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 // Qui faccio partire il gioco
