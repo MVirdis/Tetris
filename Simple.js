@@ -126,6 +126,9 @@ function cadutaGiocatore() {
 		// Coordinata x casuale altrimenti mantiene quella del pezzo precedente prima che colpisse qualcosa
 		player.pos.x = (Math.floor(Math.random()*9)+1)*grandezza_di_un_quadratino_elementare;
 		assegnaPezzo();
+
+		// Effettuo un controllo se c'è una riga piena
+		controllaContenitore();
 	}
 }
 
@@ -257,6 +260,46 @@ function ruotaPezzo(matricePezzo) {
 		}
 	}
 	return nuovaMatricePezzo;
+}
+
+// Controlla se è presente una riga piena nel contenitore da eliminare
+function controllaContenitore() {
+	var presenti = 0;
+	var pos = [];
+	for (var r=0; r<contenitore.length; ++r) {
+		var trovata = true// Ipotizzo che ci sia una riga piena
+		for(var c=0; c<contenitore[0].length; ++c) {
+			if (contenitore[r][c]==0) {
+				trovata = false;// Se trovo un buco vuol dire che questa non è piena
+			}
+		}
+		if (trovata) {
+			// Se ne ho trovata una incremento il contatore
+			// e mi salvo quale riga
+			pos.push(r);
+			++presenti;
+		}
+	}
+
+	if (presenti === 0)
+		return;
+
+	for(var i=0; i<pos.length; ++i) {// Per ogni riga piena
+		for(var r=pos[i]; r>=0; --r) {// Parto da quella e vado in su
+			for(var c=0; c<contenitore[0].length; ++c) {
+				// shifto le righe
+				if (r>0) {
+					contenitore[r][c] = contenitore[r-1][c];
+				} else {
+					contenitore[r][c] = 0;
+				}
+			}
+		}
+	}
+
+	// Forzo a ridisegnare la scena
+	disegnaScena();
+
 }
 
 // Logica delle Collisioni
