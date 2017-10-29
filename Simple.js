@@ -15,7 +15,7 @@ var player = {
 
 function assegnaPezzo() {
 	var pezzo_a_caso = pezzi[Math.floor(Math.random()*pezzi.length)];
-	player.pezzo = creaPezzo('T');
+	player.pezzo = creaPezzo(pezzo_a_caso);
 }
 
 function creaPezzo(pezzo) {
@@ -101,16 +101,53 @@ function update(istante_attuale=0) {
 	contatore_tempo += delta;
 	// Il pezzo deve cadere ogni secondo di un passo elementare
 	if (contatore_tempo>1000) {
-		contatore_tempo = 0;
-		// Abbasso il giocatore di una quota elementare
-		player.pos.y += grandezza_di_un_quadratino_elementare;
+		cadutaGiocatore();
 
-		// Disegno le cose
-		// Primo passo resetto lo sfondo a nero con un rettangolo che copre l'intero canvas
-		cntx.fillStyle = "#000";
-		cntx.fillRect(0,0, canvas.width, canvas.height);
-		// Secondo passo disegno il pezzo del giocatore ovunque si trovi in questo istante
-		disegnaPezzo(player.pezzo);
+		// Disegno la scena
+		disegnaScena();
+	}
+}
+
+// Creo una funzione per far cadere il giocatore e una per disegnare la scena
+// così che si possano chiamare da varie parti del codice
+function cadutaGiocatore() {
+	// Il contatore va resettato ogni volta che il giocatore cade
+	contatore_tempo = 0;
+	// Abbasso il giocatore di una quota elementare
+	player.pos.y += grandezza_di_un_quadratino_elementare;
+}
+
+function disegnaScena() {
+	// Primo passo resetto lo sfondo a nero con un rettangolo che copre l'intero canvas
+	cntx.fillStyle = "#000";
+	cntx.fillRect(0,0, canvas.width, canvas.height);
+	// Secondo passo disegno il pezzo del giocatore ovunque si trovi in questo istante
+	disegnaPezzo(player.pezzo);
+}
+
+// Aggiunge al documento un gestore degli eventi di pressione di un tasto
+document.addEventListener("keydown", gestisciTasti);
+
+function gestisciTasti(evento) {
+	switch(evento.keyCode) {
+		case 40://Freccia giù
+			cadutaGiocatore();
+			// Forza a disegnare la scena prima che sia passato un secondo
+			disegnaScena();
+		break;
+		case 39:// Freccia dx
+			player.pos.x += grandezza_di_un_quadratino_elementare;
+
+			disegnaScena();
+		break;
+		case 37://Freccia sx
+			player.pos.x -= grandezza_di_un_quadratino_elementare;
+
+			disegnaScena();
+		break;
+		default:// Lo uso per vedere quale keyCode corrisponde ai vari tasti
+			// Per aprire la console da Google Chrome premere Ctrl+Maiusc+I
+			console.log(evento.keyCode);
 	}
 }
 
