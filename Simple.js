@@ -123,6 +123,8 @@ function cadutaGiocatore() {
 		fissaPezzoGiocatore();
 		//Riporto il giocatore in alto e riassegno un pezzo a caso
 		player.pos.y = 0;
+		// Coordinata x casuale altrimenti mantiene quella del pezzo precedente prima che colpisse qualcosa
+		player.pos.x = (Math.floor(Math.random()*9)+1)*grandezza_di_un_quadratino_elementare;
 		assegnaPezzo();
 	}
 }
