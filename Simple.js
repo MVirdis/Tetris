@@ -1,5 +1,5 @@
 // Prelevo i controlli del canvas
-var canvas_element = document.getElementById("canvas");
+var canvas_element = document.getElementById("game_canvas");
 var cntx = canvas_element.getContext("2d");
 
 // Alcune costanti del gioco
