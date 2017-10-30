@@ -13,12 +13,20 @@ var colori = ["#02dba1", "#b134e2", "#6bc615", "#c68815", "#c61515", "#4286f4", 
 // La lunghezza del gioco dev'essere sempre un multiplo della grandezza elementare di riferimento,
 // ma deve anche rispetto l'aspect ratio di 400/240=0.6 che è il rapporto tra altezza e lunghezza
 canvas.height = Math.floor((window.innerHeight*0.9)/grandezza_di_un_quadratino_elementare)*grandezza_di_un_quadratino_elementare;
-canvas.width = Math.floor(canvas.height*0.6/grandezza_di_un_quadratino_elementare)*grandezza_di_un_quadratino_elementare;
 
 // Infine provvedo a ridimensionare i quadratini elementari in modo che ogni giocatore
 // abbia la stessa difficoltà indipendentemente dalla dimensione di schermo
 // Il rapporto tra dimensione elementare e altezza finestra è 0.05
 grandezza_di_un_quadratino_elementare = Math.floor(0.05*canvas.height);
+
+canvas.width = Math.floor(canvas.height*0.6/grandezza_di_un_quadratino_elementare)*grandezza_di_un_quadratino_elementare;
+
+// Metto un minimo al ridimensionamento
+if (canvas.height<400) {
+	canvas.height = 400;
+	canvas.width = 240;
+	grandezza_di_un_quadratino_elementare = 20;
+}
 
 // Creo un oggetto giocatore
 var player = {
