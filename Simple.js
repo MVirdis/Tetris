@@ -148,6 +148,13 @@ function disegnaScena() {
 document.addEventListener("keydown", gestisciTasti);
 
 function gestisciTasti(evento) {
+
+	// Previene la gestione automatica dell'evento
+	// per esempio di default la pagina scorre in su e in giù con le frecce
+	// Disattiva questo comportamento in modo che si possano usare per giocare
+	// lasciando la pagina ferma, eventualmente la pagina si scorre col mouse
+	evento.preventDefault();
+
 	switch(evento.keyCode) {
 		case 40://Freccia giù
 			cadutaGiocatore();//Fa già il controllo della collisione
