@@ -7,6 +7,19 @@ var grandezza_di_un_quadratino_elementare = 20;
 var pezzi = ['T', 'z', 's', 'O', 'l', 'L', 'J'];
 var colori = ["#02dba1", "#b134e2", "#6bc615", "#c68815", "#c61515", "#4286f4", "#dbdbdb"];
 
+// Imposto la grandezza del gioco
+// L'altezza del gioco dev'essere un multiplo della grandezza elementare di riferimento di 20px
+// Come altezza disponibile si considera il 90% della altezza disponibile nella finestra
+// La lunghezza del gioco dev'essere sempre un multiplo della grandezza elementare di riferimento,
+// ma deve anche rispetto l'aspect ratio di 400/240=0.6 che è il rapporto tra altezza e lunghezza
+canvas.height = Math.floor((window.innerHeight*0.9)/grandezza_di_un_quadratino_elementare)*grandezza_di_un_quadratino_elementare;
+canvas.width = Math.floor(canvas.height*0.6/grandezza_di_un_quadratino_elementare)*grandezza_di_un_quadratino_elementare;
+
+// Infine provvedo a ridimensionare i quadratini elementari in modo che ogni giocatore
+// abbia la stessa difficoltà indipendentemente dalla dimensione di schermo
+// Il rapporto tra dimensione elementare e altezza finestra è 0.05
+grandezza_di_un_quadratino_elementare = Math.floor(0.05*canvas.height);
+
 // Creo un oggetto giocatore
 var player = {
 	pos: {x: 0, y: 0},
@@ -198,7 +211,7 @@ function gestisciTasti(evento) {
 			console.log(evento.keyCode);
 	}
 }
-
+/*
 // Gestisco quando l'utente preme sul controllo left
 // la sintassi event => {codice funzione} corrisponde a
 // function qualsiasi(event) {
@@ -249,7 +262,7 @@ document.getElementById("down_control").addEventListener("click", event => {
 	// Forza a disegnare la scena prima che sia passato un secondo
 	disegnaScena();
 });
-
+*/
 // Logica delle dinamiche dei pezzi
 // Devo creare il contenitore che conterrà i pezzi una volta che sono arrivati in fondo
 // Ogni pezzo occupa una dimensione elementare dato che il canvas è largo  canvas.width

@@ -56,12 +56,11 @@ nav li {
     padding: 15px 10px;
 }
 
-main {
+.main {
 	width: 100%;
-	display: block;
-	position: static;
-	text-align: center;
+	height: 100%;
 	margin-top: 15px;
+	text-align: center;
 }
 
 .debug {
@@ -126,6 +125,8 @@ main {
 	position: relative;
 	margin: 0 auto;
 	border: 2px white solid;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 #controls_container {
@@ -141,10 +142,4 @@ main {
 #right_cntrl_container {
 	float: right;
 
-}
-
-@media screen and (min-device-width: 1024px) {
-	#controls_container {
-		display: none;
-	}
 }
