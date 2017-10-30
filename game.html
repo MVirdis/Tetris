@@ -4,6 +4,11 @@
 	<meta charset="utf-8">
 	<title>Play Tetris</title>
 	<link rel="stylesheet" type="text/css" href="./style/main.css">
+	<style type="text/css">
+		header {
+			height: initial;
+		}
+	</style>
 </head>
 <body>
 	<header>
@@ -19,7 +24,22 @@
 	</header>
 	<main>
 		<canvas id="game_canvas" width="240px" height="400px">Your browser doesn't support HTML5 Canvas.</canvas>
-		<script type="text/javascript" src="./Simple.js"></script>
+		<div id="controls_container">
+			<div id="left_cntrl_container" class="cntrl_container noselect">
+				<a id="left_control">Left</a>
+			</div>
+			<div id="rotate_cntrl_container" class="cntrl_container noselect">
+				<a id="rotate_control">Rotate</a>
+			</div>
+			<div id="down_cntrl_container" class="cntrl_container noselect">
+				<a id="down_control">Down</a>
+			</div>
+			<div id="right_cntrl_container" class="cntrl_container noselect">
+				<a id="right_control">Right</a>
+			</div>
+			<div class="clear"></div>
+			<script type="text/javascript" src="./Simple.js"></script>
+		</div>
 	</main>
 </body>
 </html>

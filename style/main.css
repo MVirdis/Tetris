@@ -56,6 +56,14 @@ nav li {
     padding: 15px 10px;
 }
 
+main {
+	width: 100%;
+	display: block;
+	position: static;
+	text-align: center;
+	margin-top: 15px;
+}
+
 .debug {
 	border: 1px dashed black;
 }
@@ -66,6 +74,22 @@ nav li {
 
 .hidden {
 	display: none;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.cntrl_container {
+	display: inline-block;
+	cursor: pointer;
+	color: orange;
 }
 
 #header_canvas {
@@ -98,4 +122,29 @@ nav li {
 	font-size: inherit;
 }
 
+#game_canvas {
+	position: relative;
+	margin: 0 auto;
+	border: 2px white solid;
+}
 
+#controls_container {
+	padding: 0 35%;
+	margin-top: 30px;
+}
+
+#left_cntrl_container {
+	float: left;
+
+}
+
+#right_cntrl_container {
+	float: right;
+
+}
+
+@media screen and (min-device-width: 1024px) {
+	#controls_container {
+		display: none;
+	}
+}

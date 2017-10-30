@@ -1,6 +1,6 @@
 // Prelevo i controlli del canvas
-var canvas_element = document.getElementById("game_canvas");
-var cntx = canvas_element.getContext("2d");
+var canvas = document.getElementById("game_canvas");
+var cntx = canvas.getContext("2d");
 
 // Alcune costanti del gioco
 var grandezza_di_un_quadratino_elementare = 20;
@@ -198,6 +198,57 @@ function gestisciTasti(evento) {
 			console.log(evento.keyCode);
 	}
 }
+
+// Gestisco quando l'utente preme sul controllo left
+// la sintassi event => {codice funzione} corrisponde a
+// function qualsiasi(event) {
+// 		codice funzione
+// }
+document.getElementById("left_control").addEventListener("click", event => {
+	// Faccio la stessa cosa del tasto sx
+	player.pos.x -= grandezza_di_un_quadratino_elementare;
+
+	// Se collido lo riporto dove stava e mi risparmio di ridisegnare la scena
+	if(collide()) {
+		player.pos.x += grandezza_di_un_quadratino_elementare;
+	} else {
+		disegnaScena();
+	}
+});
+
+// Gestisco nello stesso modo gli altri controlli
+document.getElementById("right_control").addEventListener("click", event => {
+	// Faccio la stessa cosa del tasto dx
+	player.pos.x += grandezza_di_un_quadratino_elementare;
+
+	// Se collido lo riporto dove stava e mi risparmio di ridisegnare la scena
+	if(collide()) {
+		player.pos.x -= grandezza_di_un_quadratino_elementare;
+	} else {
+		disegnaScena();
+	}
+});
+
+document.getElementById("rotate_control").addEventListener("click", event => {
+	// Faccio la stessa cosa del tasto r
+	// Ruoto il pezzo attuale se preme r
+	var backup = player.pezzo;
+	player.pezzo = ruotaPezzo(player.pezzo);
+	
+	// Controllo che la rotazione non abbia causato una collisione
+	if (collide()) {
+		player.pezzo = backup;
+	} else {
+		disegnaScena();
+	}
+});
+
+document.getElementById("down_control").addEventListener("click", event => {
+	// Faccio la stessa cosa del tasto giù
+	cadutaGiocatore();//Fa già il controllo della collisione
+	// Forza a disegnare la scena prima che sia passato un secondo
+	disegnaScena();
+});
 
 // Logica delle dinamiche dei pezzi
 // Devo creare il contenitore che conterrà i pezzi una volta che sono arrivati in fondo

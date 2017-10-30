@@ -27,7 +27,7 @@ function randint(num) {
 function randomPopulate() {
 	for(var i=0; i<number_of_falling_pieces; ++i) {
 		falling_pieces.push({piece: pieces[randint(pieces.length)],
-					 		 pos: {x:randint(86)*base_distance, y:randint(500/base_distance)*base_distance - 250}});
+					 		 pos: {x:randint(canvas.width/base_distance +1)*base_distance, y:randint(500/base_distance)*base_distance - 250}});
 	}
 }
 
