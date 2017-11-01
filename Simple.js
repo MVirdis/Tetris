@@ -6,6 +6,7 @@ var cntx = canvas.getContext("2d");
 var grandezza_di_un_quadratino_elementare = 20;
 var pezzi = ['T', 'z', 's', 'O', 'l', 'L', 'J'];
 var colori = ["#02dba1", "#b134e2", "#6bc615", "#c68815", "#c61515", "#4286f4", "#dbdbdb"];
+var points = 0;
 
 // Imposto la grandezza del gioco
 // L'altezza del gioco dev'essere un multiplo della grandezza elementare di riferimento di 20px
@@ -163,6 +164,14 @@ function disegnaScena() {
 
 	// Secondo passo disegno il pezzo del giocatore ovunque si trovi in questo istante
 	disegnaPezzo(player.pezzo);
+
+	// Parte in cui disegno il punteggio
+	cntx.fillStyle = "red";
+	cntx.font = "28px Comic Sans MS";
+	cntx.textAlign = "right";
+	cntx.fillText(points,
+				  canvas.width-10,
+				  32);
 }
 
 // Aggiunge al documento un gestore degli eventi di pressione di un tasto
@@ -219,58 +228,7 @@ function gestisciTasti(evento) {
 			console.log(evento.keyCode);
 	}
 }
-/*
-// Gestisco quando l'utente preme sul controllo left
-// la sintassi event => {codice funzione} corrisponde a
-// function qualsiasi(event) {
-// 		codice funzione
-// }
-document.getElementById("left_control").addEventListener("click", event => {
-	// Faccio la stessa cosa del tasto sx
-	player.pos.x -= grandezza_di_un_quadratino_elementare;
 
-	// Se collido lo riporto dove stava e mi risparmio di ridisegnare la scena
-	if(collide()) {
-		player.pos.x += grandezza_di_un_quadratino_elementare;
-	} else {
-		disegnaScena();
-	}
-});
-
-// Gestisco nello stesso modo gli altri controlli
-document.getElementById("right_control").addEventListener("click", event => {
-	// Faccio la stessa cosa del tasto dx
-	player.pos.x += grandezza_di_un_quadratino_elementare;
-
-	// Se collido lo riporto dove stava e mi risparmio di ridisegnare la scena
-	if(collide()) {
-		player.pos.x -= grandezza_di_un_quadratino_elementare;
-	} else {
-		disegnaScena();
-	}
-});
-
-document.getElementById("rotate_control").addEventListener("click", event => {
-	// Faccio la stessa cosa del tasto r
-	// Ruoto il pezzo attuale se preme r
-	var backup = player.pezzo;
-	player.pezzo = ruotaPezzo(player.pezzo);
-	
-	// Controllo che la rotazione non abbia causato una collisione
-	if (collide()) {
-		player.pezzo = backup;
-	} else {
-		disegnaScena();
-	}
-});
-
-document.getElementById("down_control").addEventListener("click", event => {
-	// Faccio la stessa cosa del tasto giù
-	cadutaGiocatore();//Fa già il controllo della collisione
-	// Forza a disegnare la scena prima che sia passato un secondo
-	disegnaScena();
-});
-*/
 // Logica delle dinamiche dei pezzi
 // Devo creare il contenitore che conterrà i pezzi una volta che sono arrivati in fondo
 // Ogni pezzo occupa una dimensione elementare dato che il canvas è largo  canvas.width
@@ -362,6 +320,9 @@ function controllaContenitore() {
 
 	if (presenti === 0)
 		return;
+
+	// Do tanti punti quante sono le righe piene
+	points += presenti*10;
 
 	for(var i=0; i<pos.length; ++i) {// Per ogni riga piena
 		for(var r=pos[i]; r>=0; --r) {// Parto da quella e vado in su
